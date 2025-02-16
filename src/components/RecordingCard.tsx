@@ -2,8 +2,9 @@ import { CallRecording } from "@stream-io/video-react-sdk";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
 import { calculateRecordingDuration } from "@/lib/utils";
-import { Card, CardHeader } from "./ui/card";
-import { CalendarIcon, ClockIcon } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
+import { CalendarIcon, ClockIcon, CopyIcon, PlayIcon } from "lucide-react";
+import { Button } from "./ui/button";
 
 function RecordingCard({ recording }: { recording: CallRecording }) {
   const handleCopyLink = async () => {
@@ -42,6 +43,24 @@ function RecordingCard({ recording }: { recording: CallRecording }) {
       </CardHeader>
 
       {/* CARD CONTENT */}
+      <CardContent>
+        <div className="w-full aspect-video bg-muted/50 rounded-lg flex items-center justify-center cursor-pointer group"
+          onClick={() => window.open(recording.url, "_blank")}
+        >
+          <div className="size-12 rounded-full bg-background/90 flex items-center justify-center group-hover:bg-primary transition-colors">
+            <PlayIcon className="size-6 text-muted-foreground group-hover:text-primary-foreground transition-colors" />
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="gap-2">
+        <Button className="flex-1" onClick={() => window.open(recording.url, "_blank")}>
+          <PlayIcon className="size-4 mr-2" />
+          Play Recording
+        </Button>
+        <Button variant="secondary" onClick={handleCopyLink}>
+          <CopyIcon className="size-4" />
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
